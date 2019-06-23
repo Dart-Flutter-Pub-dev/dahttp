@@ -1,4 +1,5 @@
 library dahttp;
 
-export 'src/dahttp.dart';
+export 'src/http_client.dart';
 export 'src/http_logger.dart';
+export 'src/http_result.dart';

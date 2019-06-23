@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dahttp/src/dahttp.dart';
+import 'package:dahttp/src/http_client.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
