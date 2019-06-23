@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dahttp/src/dahttp.dart';
+import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
@@ -28,21 +29,12 @@ class GetWebPage extends ValueHttp<WebPage> {
 }
 
 abstract class RestEndPoint<T> extends ValueHttp<T> {
-
   @override
   Future<HttpResult<T>> get(url, {Map<String, String> headers}) async {
-    var client = CustomClient(logger);
+    Map<String, String> newHeaders = headers ?? Map();
+    newHeaders['aa'] = 'xx';
 
-    try {
-      var response = await client.get(url, headers: headers);
-      logger.response(response);
-
-      return HttpResult<T>(response: response, value: convert(response));
-    } catch (e) {
-      return HttpResult<T>(exception: e);
-    } finally {
-      client.close();
-    }
+    return super.get(url, headers: newHeaders);
   }
 }
 
