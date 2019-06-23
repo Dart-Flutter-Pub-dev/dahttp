@@ -1,6 +1,6 @@
 name: dahttp
 description: HTTP wrapper for Dart with integrated logger design to be used for REST APIs.
-version: 1.0.0
+version: 1.1.0
 author: Mauricio Togneri <mauricio.togneri@gmail.com>
 homepage: https://github.com/mauriciotogneri/dahttp
 
@@ -9,3 +9,6 @@ environment:
 
 dependencies:
   http: ^0.12.0+2
+
+dev_dependencies:
+  meta: ^1.1.6

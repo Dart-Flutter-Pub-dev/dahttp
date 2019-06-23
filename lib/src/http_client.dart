@@ -6,17 +6,31 @@ import 'package:http/http.dart';
 abstract class ValueHttp<T> {
   final HttpLogger logger;
 
-  ValueHttp({HttpLogger logger})
-      : logger = (logger != null) ? logger : DefaultHttpLogger(true);
+  ValueHttp({this.logger});
 
   T convert(Response response);
 
+  Future<HttpResult<T>> head(url, {Map<String, String> headers}) async {
+    var client = _CustomClient(logger);
+
+    try {
+      var response = await client.head(url, headers: headers);
+      logger?.response(response);
+
+      return HttpResult<T>(response: response, value: convert(response));
+    } catch (e) {
+      return HttpResult<T>(exception: e);
+    } finally {
+      client.close();
+    }
+  }
+
   Future<HttpResult<T>> get(url, {Map<String, String> headers}) async {
-    var client = CustomClient(logger);
+    var client = _CustomClient(logger);
 
     try {
       var response = await client.get(url, headers: headers);
-      logger.response(response);
+      logger?.response(response);
 
       return HttpResult<T>(response: response, value: convert(response));
     } catch (e) {
@@ -28,12 +42,12 @@ abstract class ValueHttp<T> {
 
   Future<HttpResult<T>> post(url,
       {Map<String, String> headers, body, Encoding encoding}) async {
-    var client = CustomClient(logger);
+    var client = _CustomClient(logger);
 
     try {
       var response = await client.post(url,
           headers: headers, body: body, encoding: encoding);
-      logger.response(response);
+      logger?.response(response);
 
       return HttpResult<T>(response: response, value: convert(response));
     } catch (e) {
@@ -45,12 +59,12 @@ abstract class ValueHttp<T> {
 
   Future<HttpResult<T>> put(url,
       {Map<String, String> headers, body, Encoding encoding}) async {
-    var client = CustomClient(logger);
+    var client = _CustomClient(logger);
 
     try {
       var response = await client.put(url,
           headers: headers, body: body, encoding: encoding);
-      logger.response(response);
+      logger?.response(response);
 
       return HttpResult<T>(response: response, value: convert(response));
     } catch (e) {
@@ -62,12 +76,12 @@ abstract class ValueHttp<T> {
 
   Future<HttpResult<T>> patch(url,
       {Map<String, String> headers, body, Encoding encoding}) async {
-    var client = CustomClient(logger);
+    var client = _CustomClient(logger);
 
     try {
       var response = await client.patch(url,
           headers: headers, body: body, encoding: encoding);
-      logger.response(response);
+      logger?.response(response);
 
       return HttpResult<T>(response: response, value: convert(response));
     } catch (e) {
@@ -78,11 +92,11 @@ abstract class ValueHttp<T> {
   }
 
   Future<HttpResult<T>> delete(url, {Map<String, String> headers}) async {
-    var client = CustomClient(logger);
+    var client = _CustomClient(logger);
 
     try {
       var response = await client.delete(url, headers: headers);
-      logger.response(response);
+      logger?.response(response);
 
       return HttpResult<T>(response: response, value: convert(response));
     } catch (e) {
@@ -97,20 +111,18 @@ class EmptyHttp extends ValueHttp<Null> {
   EmptyHttp({HttpLogger logger}) : super(logger: logger);
 
   @override
-  Null convert(Response response) {
-    return null;
-  }
+  Null convert(Response response) => null;
 }
 
-class CustomClient extends BaseClient {
+class _CustomClient extends BaseClient {
   final Client _client = Client();
-  final DefaultHttpLogger _logger;
+  final HttpLogger _logger;
 
-  CustomClient(this._logger);
+  _CustomClient(this._logger);
 
   @override
   Future<StreamedResponse> send(BaseRequest request) {
-    _logger.request(request);
+    _logger?.request(request);
     return _client.send(request);
   }
 
