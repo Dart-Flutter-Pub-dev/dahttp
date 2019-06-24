@@ -17,7 +17,7 @@ abstract class ValueHttp<T> {
       var response = await client.head(url, headers: headers);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {
@@ -32,7 +32,7 @@ abstract class ValueHttp<T> {
       var response = await client.get(url, headers: headers);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {
@@ -49,7 +49,7 @@ abstract class ValueHttp<T> {
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {
@@ -66,7 +66,7 @@ abstract class ValueHttp<T> {
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {
@@ -83,7 +83,7 @@ abstract class ValueHttp<T> {
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {
@@ -98,7 +98,7 @@ abstract class ValueHttp<T> {
       var response = await client.delete(url, headers: headers);
       logger?.response(response);
 
-      return HttpResult<T>(response: response, value: convert(response));
+      return HttpResult<T>(response: response, data: convert(response));
     } catch (e) {
       return HttpResult<T>(exception: e);
     } finally {

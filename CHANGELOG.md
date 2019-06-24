@@ -9,3 +9,8 @@
 ## [1.2.0] - 2019-06-23
 
 * Added automated tests
+
+## [1.3.0] - 2019-06-24
+
+* Added new methods to `HttpResult`
+* Renamed `value` to `data` in `HttpResult`

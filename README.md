@@ -10,7 +10,7 @@ main() async {
   var result = await getDogCeo.call();
 
   if (result.isSuccessful) {
-    print('Result: ${result.value.url}');
+    print('Result: ${result.data.url}');
   } else if (result.isUnsuccessful) {
     print('Error: ${result.response.statusCode}');
   } else if (result.hasFailed) {
