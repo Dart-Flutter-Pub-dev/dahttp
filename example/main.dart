@@ -4,9 +4,9 @@ import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
-Future main() async {
-  final getDogCeo = GetDogCeo();
-  final result = await getDogCeo.call();
+Future<void> main() async {
+  final GetDogCeo getDogCeo = GetDogCeo();
+  final HttpResult<DogCeo> result = await getDogCeo.call();
 
   if (result.isSuccessful) {
     print('Result: ${result.data.url}');
@@ -35,7 +35,7 @@ class DogCeo {
   const DogCeo(this.url);
 
   static DogCeo fromJson(String json) {
-    final data = jsonDecode(json);
+    final dynamic data = jsonDecode(json);
 
     return DogCeo(data['message']);
   }

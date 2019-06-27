@@ -9,8 +9,8 @@ import 'package:test/test.dart';
 void main() {
   group('dahttp', () {
     test('get web page', () async {
-      final getWebPage = GetWebPage();
-      final result = await getWebPage.call();
+      final GetWebPage getWebPage = GetWebPage();
+      final HttpResult<WebPage> result = await getWebPage.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -18,8 +18,8 @@ void main() {
     });
 
     test('get empty', () async {
-      final getEmpty = GetEmpty();
-      final result = await getEmpty.call();
+      final GetEmpty getEmpty = GetEmpty();
+      final HttpResult<void> result = await getEmpty.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -27,8 +27,8 @@ void main() {
     });
 
     test('post web page', () async {
-      final postSample = PostSample();
-      final result = await postSample.call();
+      final PostSample postSample = PostSample();
+      final HttpResult<void> result = await postSample.call();
 
       expect(result.response.statusCode, equals(201));
       expect(result.isSuccessful, isTrue);
@@ -36,8 +36,8 @@ void main() {
     });
 
     test('put web page', () async {
-      final putSample = PutSample();
-      final result = await putSample.call();
+      final PutSample putSample = PutSample();
+      final HttpResult<void> result = await putSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -45,8 +45,8 @@ void main() {
     });
 
     test('patch web page', () async {
-      final patchSample = PatchSample();
-      final result = await patchSample.call();
+      final PatchSample patchSample = PatchSample();
+      final HttpResult<void> result = await patchSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -54,8 +54,8 @@ void main() {
     });
 
     test('delete web page', () async {
-      final deleteSample = DeleteSample();
-      final result = await deleteSample.call();
+      final DeleteSample deleteSample = DeleteSample();
+      final HttpResult<void> result = await deleteSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -63,8 +63,8 @@ void main() {
     });
 
     test('non existent end point', () async {
-      final nonExistent = NonExistentEndPoint();
-      final result = await nonExistent.call();
+      final NonExistentEndPoint nonExistent = NonExistentEndPoint();
+      final HttpResult<void> result = await nonExistent.call();
 
       expect(result.hasFailed, isTrue);
     });
@@ -87,7 +87,7 @@ class GetWebPage extends ValueHttp<WebPage> {
 class GetEmpty extends EmptyHttp {
   GetEmpty() : super(logger: DefaultHttpLogger(true));
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.get('https://demo4798213.mockable.io/empty');
   }
 }
@@ -95,7 +95,7 @@ class GetEmpty extends EmptyHttp {
 class PostSample extends EmptyHttp {
   PostSample() : super(logger: DefaultHttpLogger(true));
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.post('https://demo4798213.mockable.io/post', body: '{}');
   }
 }
@@ -103,7 +103,7 @@ class PostSample extends EmptyHttp {
 class PutSample extends EmptyHttp {
   PutSample() : super(logger: DefaultHttpLogger(true));
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.put('https://demo4798213.mockable.io/put', body: '{}');
   }
 }
@@ -111,7 +111,7 @@ class PutSample extends EmptyHttp {
 class PatchSample extends EmptyHttp {
   PatchSample() : super(logger: DefaultHttpLogger(true));
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.patch('https://demo4798213.mockable.io/patch', body: '{}');
   }
 }
@@ -119,7 +119,7 @@ class PatchSample extends EmptyHttp {
 class DeleteSample extends EmptyHttp {
   DeleteSample() : super(logger: DefaultHttpLogger(true));
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.delete('https://demo4798213.mockable.io/delete');
   }
 }
@@ -129,7 +129,7 @@ class NonExistentEndPoint extends EmptyHttp {
 
   static const String URL = 'https://nonexistent.com';
 
-  Future<HttpResult> call() {
+  Future<HttpResult<void>> call() {
     return super.get(URL);
   }
 }
@@ -141,7 +141,7 @@ class WebPage {
   const WebPage(this.url);
 
   static WebPage json(String json) {
-    final data = jsonDecode(json);
+    final dynamic data = jsonDecode(json);
 
     return WebPage(data['url']);
   }

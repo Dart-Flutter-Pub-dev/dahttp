@@ -17,9 +17,9 @@ class DefaultHttpLogger extends HttpLogger {
       print(
           '--> ${request.method} ${request.url} (${request.contentLength}-byte body) [$tag]');
 
-      final headers = request.headers;
+      final Map<String, String> headers = request.headers;
 
-      for (var header in headers.keys) {
+      for (String header in headers.keys) {
         print('$header: ${headers[header]}');
       }
 
@@ -34,13 +34,13 @@ class DefaultHttpLogger extends HttpLogger {
   @override
   void response(Response response) {
     if (enabled) {
-      final difference = DateTime.now().difference(start);
+      final Duration difference = DateTime.now().difference(start);
       print(
           '<-- ${response.statusCode} ${response.reasonPhrase} (${difference.inMilliseconds}ms) [$tag]');
 
-      final headers = response.headers;
+      final Map<String, String> headers = response.headers;
 
-      for (var header in headers.keys) {
+      for (String header in headers.keys) {
         print('$header: ${headers[header]}');
       }
 

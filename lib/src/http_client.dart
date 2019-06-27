@@ -10,11 +10,11 @@ abstract class ValueHttp<T> {
 
   T convert(Response response);
 
-  Future<HttpResult<T>> head(url, {Map<String, String> headers}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> head(String url, {Map<String, String> headers}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.head(url, headers: headers);
+      final Response response = await client.head(url, headers: headers);
       logger?.response(response);
 
       return HttpResult<T>(response: response, data: convert(response));
@@ -25,11 +25,11 @@ abstract class ValueHttp<T> {
     }
   }
 
-  Future<HttpResult<T>> get(url, {Map<String, String> headers}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> get(String url, {Map<String, String> headers}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.get(url, headers: headers);
+      final Response response = await client.get(url, headers: headers);
       logger?.response(response);
 
       return HttpResult<T>(response: response, data: convert(response));
@@ -40,12 +40,12 @@ abstract class ValueHttp<T> {
     }
   }
 
-  Future<HttpResult<T>> post(url,
-      {Map<String, String> headers, body, Encoding encoding}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> post(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.post(url,
+      final Response response = await client.post(url,
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
@@ -57,12 +57,12 @@ abstract class ValueHttp<T> {
     }
   }
 
-  Future<HttpResult<T>> put(url,
-      {Map<String, String> headers, body, Encoding encoding}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> put(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.put(url,
+      final Response response = await client.put(url,
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
@@ -74,12 +74,12 @@ abstract class ValueHttp<T> {
     }
   }
 
-  Future<HttpResult<T>> patch(url,
-      {Map<String, String> headers, body, Encoding encoding}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> patch(String url,
+      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.patch(url,
+      final Response response = await client.patch(url,
           headers: headers, body: body, encoding: encoding);
       logger?.response(response);
 
@@ -91,11 +91,12 @@ abstract class ValueHttp<T> {
     }
   }
 
-  Future<HttpResult<T>> delete(url, {Map<String, String> headers}) async {
-    final client = _CustomClient(logger);
+  Future<HttpResult<T>> delete(String url,
+      {Map<String, String> headers}) async {
+    final _CustomClient client = _CustomClient(logger);
 
     try {
-      final response = await client.delete(url, headers: headers);
+      final Response response = await client.delete(url, headers: headers);
       logger?.response(response);
 
       return HttpResult<T>(response: response, data: convert(response));

@@ -8,7 +8,7 @@ Add the following dependencies to your `pubspec.yaml`:
 
 ```yaml
 dependencies: 
-  dahttp: ^1.3.1
+  dahttp: ^1.4.0
 ```
 
 ## Example

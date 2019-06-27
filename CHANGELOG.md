@@ -15,6 +15,6 @@
 * Added new methods to `HttpResult`
 * Renamed `value` to `data` in `HttpResult`
 
-## [1.3.2] - 2019-06-27
+## [1.4.0] - 2019-06-27
 
 * Added lint rules
