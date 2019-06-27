@@ -17,9 +17,9 @@ class HttpResult<T> {
   String get body => (response != null) ? response.body : '';
 
   Map<String, String> get headers =>
-      (response != null) ? response.headers : Map();
+      (response != null) ? response.headers : {};
 
   bool status(int code) => (response != null) && (response.statusCode == code);
 
-  bool get hasFailed => (exception != null);
+  bool get hasFailed => exception != null;
 }

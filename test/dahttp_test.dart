@@ -4,13 +4,13 @@ import 'package:dahttp/src/http_logger.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
 void main() {
   group('dahttp', () {
     test('get web page', () async {
-      var getWebPage = GetWebPage();
-      var result = await getWebPage.call();
+      final getWebPage = GetWebPage();
+      final result = await getWebPage.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -18,8 +18,8 @@ void main() {
     });
 
     test('get empty', () async {
-      var getEmpty = GetEmpty();
-      var result = await getEmpty.call();
+      final getEmpty = GetEmpty();
+      final result = await getEmpty.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -27,8 +27,8 @@ void main() {
     });
 
     test('post web page', () async {
-      var postSample = PostSample();
-      var result = await postSample.call();
+      final postSample = PostSample();
+      final result = await postSample.call();
 
       expect(result.response.statusCode, equals(201));
       expect(result.isSuccessful, isTrue);
@@ -36,8 +36,8 @@ void main() {
     });
 
     test('put web page', () async {
-      var putSample = PutSample();
-      var result = await putSample.call();
+      final putSample = PutSample();
+      final result = await putSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -45,8 +45,8 @@ void main() {
     });
 
     test('patch web page', () async {
-      var patchSample = PatchSample();
-      var result = await patchSample.call();
+      final patchSample = PatchSample();
+      final result = await patchSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -54,8 +54,8 @@ void main() {
     });
 
     test('delete web page', () async {
-      var deleteSample = DeleteSample();
-      var result = await deleteSample.call();
+      final deleteSample = DeleteSample();
+      final result = await deleteSample.call();
 
       expect(result.response.statusCode, equals(200));
       expect(result.isSuccessful, isTrue);
@@ -63,8 +63,8 @@ void main() {
     });
 
     test('non existent end point', () async {
-      var nonExistent = NonExistentEndPoint();
-      var result = await nonExistent.call();
+      final nonExistent = NonExistentEndPoint();
+      final result = await nonExistent.call();
 
       expect(result.hasFailed, isTrue);
     });
@@ -138,10 +138,10 @@ class NonExistentEndPoint extends EmptyHttp {
 class WebPage {
   final String url;
 
-  WebPage(this.url);
+  const WebPage(this.url);
 
   static WebPage json(String json) {
-    var data = jsonDecode(json);
+    final data = jsonDecode(json);
 
     return WebPage(data['url']);
   }

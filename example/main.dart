@@ -4,9 +4,9 @@ import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
-main() async {
-  var getDogCeo = GetDogCeo();
-  var result = await getDogCeo.call();
+Future main() async {
+  final getDogCeo = GetDogCeo();
+  final result = await getDogCeo.call();
 
   if (result.isSuccessful) {
     print('Result: ${result.data.url}');
@@ -32,10 +32,10 @@ class GetDogCeo extends ValueHttp<DogCeo> {
 class DogCeo {
   final String url;
 
-  DogCeo(this.url);
+  const DogCeo(this.url);
 
   static DogCeo fromJson(String json) {
-    var data = jsonDecode(json);
+    final data = jsonDecode(json);
 
     return DogCeo(data['message']);
   }
