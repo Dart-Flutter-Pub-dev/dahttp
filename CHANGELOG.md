@@ -18,3 +18,7 @@
 ## [1.4.0] - 2019-06-27
 
 * Added lint rules
+
+## [1.4.1] - 2019-07-01
+
+* HTTP client and HTTP result improvements

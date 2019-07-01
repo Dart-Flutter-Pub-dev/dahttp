@@ -14,6 +14,8 @@ class HttpResult<T> {
 
   bool get isUnsuccessful => (response != null) && (response.statusCode >= 400);
 
+  bool get hasData => data != null;
+
   String get body => (response != null) ? response.body : '';
 
   Map<String, String> get headers =>
