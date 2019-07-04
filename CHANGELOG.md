@@ -26,3 +26,7 @@
 ## [1.5.0] - 2019-07-04
 
 * Added more methods to handle the response
+
+## [1.6.0] - 2019-07-04
+
+* Added handler when error or exception

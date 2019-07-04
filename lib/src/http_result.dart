@@ -36,24 +36,35 @@ class HttpResult<T> {
   bool hasStatus(int code) =>
       (_response != null) && (_response.statusCode == code);
 
-  void handle({OnSuccess<T> success, OnError error, OnException exception}) {
+  void handle(
+      {OnSuccess<T> success,
+      OnError error,
+      OnException exception,
+      OnFailure failure}) {
     if (isSuccess) {
       success?.call(_data, _response);
-    } else if (isError) {
-      error?.call(_response);
-    } else if (hasException) {
-      exception?.call(_exception);
+    } else if (isError && (error != null)) {
+      error(_response);
+    } else if (hasException && (exception != null)) {
+      exception(_exception);
+    } else {
+      failure?.call(response: _response, exception: _exception);
     }
   }
 
   void handleEmpty(
-      {OnSuccessEmpty successful, OnError error, OnException exception}) {
+      {OnSuccessEmpty successful,
+      OnError error,
+      OnException exception,
+      OnFailure failure}) {
     if (isSuccess) {
       successful?.call(_response);
-    } else if (isError) {
-      error?.call(_response);
-    } else if (hasException) {
-      exception?.call(_exception);
+    } else if (isError && (error != null)) {
+      error(_response);
+    } else if (hasException && (exception != null)) {
+      exception(_exception);
+    } else {
+      failure?.call(response: _response, exception: _exception);
     }
   }
 
@@ -88,6 +99,14 @@ class HttpResult<T> {
 
     return this;
   }
+
+  HttpResult<T> onFailure(OnFailure failure) {
+    if (isError || hasException) {
+      failure?.call(response: _response, exception: _exception);
+    }
+
+    return this;
+  }
 }
 
 typedef OnSuccess<T> = void Function(T data, Response response);
@@ -96,4 +115,6 @@ typedef OnSuccessEmpty = void Function(Response response);
 
 typedef OnError = void Function(Response response);
 
-typedef OnException = void Function(dynamic error);
+typedef OnException = void Function(dynamic exception);
+
+typedef OnFailure = void Function({Response response, dynamic exception});
