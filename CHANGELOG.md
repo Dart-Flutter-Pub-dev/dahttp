@@ -30,3 +30,7 @@
 ## [1.6.0] - 2019-07-04
 
 * Added handler when error or exception
+
+## [1.6.1] - 2019-07-04
+
+* Improved failure handler

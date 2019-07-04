@@ -48,7 +48,7 @@ class HttpResult<T> {
     } else if (hasException && (exception != null)) {
       exception(_exception);
     } else {
-      failure?.call(response: _response, exception: _exception);
+      failure?.call(_response, _exception);
     }
   }
 
@@ -64,7 +64,7 @@ class HttpResult<T> {
     } else if (hasException && (exception != null)) {
       exception(_exception);
     } else {
-      failure?.call(response: _response, exception: _exception);
+      failure?.call(_response, _exception);
     }
   }
 
@@ -102,7 +102,7 @@ class HttpResult<T> {
 
   HttpResult<T> onFailure(OnFailure failure) {
     if (isError || hasException) {
-      failure?.call(response: _response, exception: _exception);
+      failure?.call(_response, _exception);
     }
 
     return this;
@@ -117,4 +117,4 @@ typedef OnError = void Function(Response response);
 
 typedef OnException = void Function(dynamic exception);
 
-typedef OnFailure = void Function({Response response, dynamic exception});
+typedef OnFailure = void Function(Response response, dynamic exception);
