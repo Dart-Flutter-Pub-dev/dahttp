@@ -6,7 +6,7 @@ class DefaultHttpLogger extends HttpLogger {
   DateTime start;
   String tag;
 
-  DefaultHttpLogger(this.enabled);
+  DefaultHttpLogger([this.enabled = false]);
 
   @override
   void request(Request request) {

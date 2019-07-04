@@ -22,3 +22,7 @@
 ## [1.4.1] - 2019-07-01
 
 * HTTP client and HTTP result improvements
+
+## [1.5.0] - 2019-07-04
+
+* Added more methods to handle the response

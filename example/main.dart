@@ -8,15 +8,47 @@ Future<void> main() async {
   final GetDogCeo getDogCeo = GetDogCeo();
   final HttpResult<DogCeo> result = await getDogCeo.call();
 
-  if (result.isSuccessful) {
-    print('Result: ${result.data.url}');
-  } else if (result.isUnsuccessful) {
+  // checking boolean properties
+  if (result.isSuccess) {
+    print('Success: ${result.data.url}');
+  } else if (result.isError) {
     print('Error: ${result.response.statusCode}');
-  } else if (result.hasFailed) {
+  } else if (result.hasException) {
     print('Exception: ${result.exception}');
   }
+
+  // passing callbacks (named parameters)
+  result.handle(success: (DogCeo dog, Response response) {
+    print('Success: ${dog.url}');
+  }, error: (Response response) {
+    print('Error: ${response.statusCode}');
+  }, exception: (dynamic exception) {
+    print('Exception: $exception');
+  });
+
+  // passing callbacks (chained notation)
+  result.onSuccess((DogCeo dog, Response response) {
+    print('Success: ${dog.url}');
+  }).onError((Response response) {
+    print('Error: ${response.statusCode}');
+  }).onException((dynamic exception) {
+    print('Exception: $exception');
+  });
+
+  // passing callbacks (cascade notation)
+  result
+    ..onSuccess((DogCeo dog, Response response) {
+      print('Success: ${dog.url}');
+    })
+    ..onError((Response response) {
+      print('Error: ${response.statusCode}');
+    })
+    ..onException((dynamic exception) {
+      print('Exception: $exception');
+    });
 }
 
+@immutable
 class GetDogCeo extends ValueHttp<DogCeo> {
   Future<HttpResult<DogCeo>> call() {
     return super.get('https://dog.ceo/api/breeds/image/random');

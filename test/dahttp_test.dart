@@ -13,7 +13,7 @@ void main() {
       final HttpResult<WebPage> result = await getWebPage.call();
 
       expect(result.response.statusCode, equals(200));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isNotEmpty);
     });
 
@@ -22,7 +22,7 @@ void main() {
       final HttpResult<void> result = await getEmpty.call();
 
       expect(result.response.statusCode, equals(200));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isEmpty);
     });
 
@@ -31,7 +31,7 @@ void main() {
       final HttpResult<void> result = await postSample.call();
 
       expect(result.response.statusCode, equals(201));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isEmpty);
     });
 
@@ -40,7 +40,7 @@ void main() {
       final HttpResult<void> result = await putSample.call();
 
       expect(result.response.statusCode, equals(200));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isEmpty);
     });
 
@@ -49,7 +49,7 @@ void main() {
       final HttpResult<void> result = await patchSample.call();
 
       expect(result.response.statusCode, equals(200));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isEmpty);
     });
 
@@ -58,7 +58,7 @@ void main() {
       final HttpResult<void> result = await deleteSample.call();
 
       expect(result.response.statusCode, equals(200));
-      expect(result.isSuccessful, isTrue);
+      expect(result.isSuccess, isTrue);
       expect(result.response.body, isEmpty);
     });
 
@@ -66,7 +66,7 @@ void main() {
       final NonExistentEndPoint nonExistent = NonExistentEndPoint();
       final HttpResult<void> result = await nonExistent.call();
 
-      expect(result.hasFailed, isTrue);
+      expect(result.hasException, isTrue);
     });
   });
 }

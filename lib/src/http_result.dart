@@ -1,27 +1,99 @@
 import 'package:http/http.dart';
 
 class HttpResult<T> {
-  final Response response;
-  final T data;
-  final dynamic exception;
+  final Response _response;
+  final T _data;
+  final dynamic _exception;
 
-  HttpResult({this.response, this.data, this.exception});
+  HttpResult.result(this._response, this._data) : _exception = null;
 
-  bool get isSuccessful =>
-      (response != null) &&
-      (response.statusCode >= 200) &&
-      (response.statusCode <= 299);
+  HttpResult.exception(this._exception)
+      : _response = null,
+        _data = null;
 
-  bool get isUnsuccessful => (response != null) && (response.statusCode >= 400);
+  Response get response => _response;
 
-  bool get hasData => data != null;
+  T get data => _data;
 
-  String get body => (response != null) ? response.body : '';
+  dynamic get exception => _exception;
+
+  bool get isSuccess =>
+      (_response != null) &&
+      (_response.statusCode >= 200) &&
+      (_response.statusCode <= 299);
+
+  bool get isError => (_response != null) && (_response.statusCode >= 400);
+
+  bool get hasException => _exception != null;
+
+  bool get hasData => _data != null;
+
+  String get body => (_response != null) ? _response.body : '';
 
   Map<String, String> get headers =>
-      (response != null) ? response.headers : <String, String>{};
+      (_response != null) ? _response.headers : <String, String>{};
 
-  bool status(int code) => (response != null) && (response.statusCode == code);
+  bool hasStatus(int code) =>
+      (_response != null) && (_response.statusCode == code);
 
-  bool get hasFailed => exception != null;
+  void handle({OnSuccess<T> success, OnError error, OnException exception}) {
+    if (isSuccess) {
+      success?.call(_data, _response);
+    } else if (isError) {
+      error?.call(_response);
+    } else if (hasException) {
+      exception?.call(_exception);
+    }
+  }
+
+  void handleEmpty(
+      {OnSuccessEmpty successful, OnError error, OnException exception}) {
+    if (isSuccess) {
+      successful?.call(_response);
+    } else if (isError) {
+      error?.call(_response);
+    } else if (hasException) {
+      exception?.call(_exception);
+    }
+  }
+
+  HttpResult<T> onSuccess(OnSuccess<T> success) {
+    if (isSuccess) {
+      success?.call(_data, _response);
+    }
+
+    return this;
+  }
+
+  HttpResult<T> onSuccessEmpty(OnSuccessEmpty success) {
+    if (isSuccess) {
+      success?.call(_response);
+    }
+
+    return this;
+  }
+
+  HttpResult<T> onError(OnError error) {
+    if (isError) {
+      error?.call(_response);
+    }
+
+    return this;
+  }
+
+  HttpResult<T> onException(OnException exception) {
+    if (hasException) {
+      exception?.call(_exception);
+    }
+
+    return this;
+  }
 }
+
+typedef OnSuccess<T> = void Function(T data, Response response);
+
+typedef OnSuccessEmpty = void Function(Response response);
+
+typedef OnError = void Function(Response response);
+
+typedef OnException = void Function(dynamic error);
