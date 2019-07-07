@@ -71,11 +71,14 @@ void main() {
   });
 }
 
+const String URL = 'https://demo4798213.mockable.io';
+
 class GetWebPage extends ValuedHttpClient<WebPage> {
   GetWebPage() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<WebPage>> call() {
-    return super.get('https://demo4798213.mockable.io/webpage');
+    return super.get('$URL/webpage',
+        query: <String, dynamic>{'foo': 'bar', 'test': 123});
   }
 
   @override
@@ -88,7 +91,7 @@ class GetEmpty extends EmptyHttpClient {
   GetEmpty() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.get('https://demo4798213.mockable.io/empty');
+    return super.get('$URL/empty');
   }
 }
 
@@ -96,7 +99,7 @@ class PostSample extends EmptyHttpClient {
   PostSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.post('https://demo4798213.mockable.io/post', body: '{}');
+    return super.post('$URL/post', body: '{}');
   }
 }
 
@@ -104,7 +107,7 @@ class PutSample extends EmptyHttpClient {
   PutSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.put('https://demo4798213.mockable.io/put', body: '{}');
+    return super.put('$URL/put', body: '{}');
   }
 }
 
@@ -112,7 +115,7 @@ class PatchSample extends EmptyHttpClient {
   PatchSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.patch('https://demo4798213.mockable.io/patch', body: '{}');
+    return super.patch('$URL/patch', body: '{}');
   }
 }
 
@@ -120,7 +123,7 @@ class DeleteSample extends EmptyHttpClient {
   DeleteSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.delete('https://demo4798213.mockable.io/delete');
+    return super.delete('$URL/delete');
   }
 }
 

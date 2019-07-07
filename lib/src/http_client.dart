@@ -10,50 +10,67 @@ abstract class ValuedHttpClient<T> {
 
   T convert(Response response);
 
-  Future<HttpResult<T>> head(String url, {Map<String, String> headers}) async {
+  Future<HttpResult<T>> head(String url,
+      {Map<String, dynamic> query, Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _execute(client, client.head(url, headers: headers));
+    return _process(client, client.head(_url(url, query), headers: headers));
   }
 
-  Future<HttpResult<T>> get(String url, {Map<String, String> headers}) async {
+  Future<HttpResult<T>> get(String url,
+      {Map<String, dynamic> query, Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _execute(client, client.get(url, headers: headers));
+    return _process(client, client.get(_url(url, query), headers: headers));
   }
 
   Future<HttpResult<T>> post(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+      {Map<String, dynamic> query,
+      Map<String, String> headers,
+      dynamic body,
+      Encoding encoding}) async {
     final _CustomClient client = _client();
 
-    return _execute(client,
-        client.post(url, headers: headers, body: body, encoding: encoding));
+    return _process(
+        client,
+        client.post(_url(url, query),
+            headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> put(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+      {Map<String, dynamic> query,
+      Map<String, String> headers,
+      dynamic body,
+      Encoding encoding}) async {
     final _CustomClient client = _client();
 
-    return _execute(client,
-        client.put(url, headers: headers, body: body, encoding: encoding));
+    return _process(
+        client,
+        client.put(_url(url, query),
+            headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> patch(String url,
-      {Map<String, String> headers, dynamic body, Encoding encoding}) async {
+      {Map<String, dynamic> query,
+      Map<String, String> headers,
+      dynamic body,
+      Encoding encoding}) async {
     final _CustomClient client = _client();
 
-    return _execute(client,
-        client.patch(url, headers: headers, body: body, encoding: encoding));
+    return _process(
+        client,
+        client.patch(_url(url, query),
+            headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> delete(String url,
-      {Map<String, String> headers}) async {
+      {Map<String, dynamic> query, Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _execute(client, client.delete(url, headers: headers));
+    return _process(client, client.delete(_url(url, query), headers: headers));
   }
 
-  Future<HttpResult<T>> _execute(
+  Future<HttpResult<T>> _process(
       _CustomClient client, Future<Response> futureResponse) async {
     try {
       final Response response = await futureResponse;
@@ -69,12 +86,39 @@ abstract class ValuedHttpClient<T> {
 
   _CustomClient _client() => _CustomClient(logger);
 
+  String _url(String baseUrl, Map<String, dynamic> queryParameters) {
+    String query = '';
+
+    if (queryParameters != null) {
+      for (String key in queryParameters.keys) {
+        if (query.isEmpty) {
+          query += '?';
+        } else {
+          query += '&';
+        }
+
+        query += '$key=${queryParameters[key]}';
+      }
+    }
+
+    return '$baseUrl$query';
+  }
+
   T _data(Response response) {
     return ((response != null) &&
             (response.statusCode >= 200) &&
             (response.statusCode <= 299))
-        ? convert(response)
+        ? _convert(response)
         : null;
+  }
+
+  T _convert(Response response) {
+    try {
+      return convert(response);
+    } catch (e) {
+      throw FormatException(
+          'Errror converting response to $T. Content:\n${response.body}', e);
+    }
   }
 }
 
@@ -94,7 +138,7 @@ class _CustomClient extends BaseClient {
   @override
   Future<StreamedResponse> send(BaseRequest request) {
     _logger.request(request);
-    
+
     return _client.send(request);
   }
 
