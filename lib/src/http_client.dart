@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 abstract class ValueHttp<T> {
   final HttpLogger logger;
 
-  ValueHttp({this.logger});
+  ValueHttp([HttpLogger logger]) : logger = logger ?? EmptyHttpLogger();
 
   T convert(Response response);
 
@@ -15,7 +15,7 @@ abstract class ValueHttp<T> {
 
     try {
       final Response response = await client.head(url, headers: headers);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -30,7 +30,7 @@ abstract class ValueHttp<T> {
 
     try {
       final Response response = await client.get(url, headers: headers);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -47,7 +47,7 @@ abstract class ValueHttp<T> {
     try {
       final Response response = await client.post(url,
           headers: headers, body: body, encoding: encoding);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -64,7 +64,7 @@ abstract class ValueHttp<T> {
     try {
       final Response response = await client.put(url,
           headers: headers, body: body, encoding: encoding);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -81,7 +81,7 @@ abstract class ValueHttp<T> {
     try {
       final Response response = await client.patch(url,
           headers: headers, body: body, encoding: encoding);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -97,7 +97,7 @@ abstract class ValueHttp<T> {
 
     try {
       final Response response = await client.delete(url, headers: headers);
-      logger?.response(response);
+      logger.response(response);
 
       return HttpResult<T>.result(response, data(response));
     } catch (e) {
@@ -117,7 +117,7 @@ abstract class ValueHttp<T> {
 }
 
 class EmptyHttp extends ValueHttp<void> {
-  EmptyHttp({HttpLogger logger}) : super(logger: logger);
+  EmptyHttp([HttpLogger logger]) : super(logger);
 
   @override
   void convert(Response response) {}
@@ -131,7 +131,7 @@ class _CustomClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) {
-    _logger?.request(request);
+    _logger.request(request);
     return _client.send(request);
   }
 

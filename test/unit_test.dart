@@ -72,7 +72,7 @@ void main() {
 }
 
 class GetWebPage extends ValueHttp<WebPage> {
-  GetWebPage() : super(logger: DefaultHttpLogger());
+  GetWebPage() : super(DefaultHttpLogger());
 
   Future<HttpResult<WebPage>> call() {
     return super.get('https://demo4798213.mockable.io/webpage');
@@ -85,7 +85,7 @@ class GetWebPage extends ValueHttp<WebPage> {
 }
 
 class GetEmpty extends EmptyHttp {
-  GetEmpty() : super(logger: DefaultHttpLogger());
+  GetEmpty() : super(DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
     return super.get('https://demo4798213.mockable.io/empty');
@@ -93,7 +93,7 @@ class GetEmpty extends EmptyHttp {
 }
 
 class PostSample extends EmptyHttp {
-  PostSample() : super(logger: DefaultHttpLogger());
+  PostSample() : super(DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
     return super.post('https://demo4798213.mockable.io/post', body: '{}');
@@ -101,7 +101,7 @@ class PostSample extends EmptyHttp {
 }
 
 class PutSample extends EmptyHttp {
-  PutSample() : super(logger: DefaultHttpLogger());
+  PutSample() : super(DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
     return super.put('https://demo4798213.mockable.io/put', body: '{}');
@@ -109,7 +109,7 @@ class PutSample extends EmptyHttp {
 }
 
 class PatchSample extends EmptyHttp {
-  PatchSample() : super(logger: DefaultHttpLogger());
+  PatchSample() : super(DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
     return super.patch('https://demo4798213.mockable.io/patch', body: '{}');
@@ -117,7 +117,7 @@ class PatchSample extends EmptyHttp {
 }
 
 class DeleteSample extends EmptyHttp {
-  DeleteSample() : super(logger: DefaultHttpLogger());
+  DeleteSample() : super(DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
     return super.delete('https://demo4798213.mockable.io/delete');
@@ -125,7 +125,7 @@ class DeleteSample extends EmptyHttp {
 }
 
 class NonExistentEndPoint extends EmptyHttp {
-  NonExistentEndPoint() : super(logger: DefaultHttpLogger());
+  NonExistentEndPoint() : super(DefaultHttpLogger());
 
   static const String URL = 'https://nonexistent.com';
 

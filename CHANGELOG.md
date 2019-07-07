@@ -34,3 +34,7 @@
 ## [1.6.1] - 2019-07-04
 
 * Improved failure handler
+
+## [1.7.0] - 2019-07-07
+
+* Improved HTTP logger
