@@ -1,15 +1,12 @@
 import 'dart:convert';
-import 'package:dahttp/src/http_interceptor.dart';
 import 'package:dahttp/src/http_logger.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 
 abstract class ValuedHttpClient<T> {
-  final HttpInterceptor interceptor;
   final HttpLogger logger;
 
-  ValuedHttpClient({this.interceptor, HttpLogger logger})
-      : logger = logger ?? EmptyHttpLogger();
+  ValuedHttpClient({HttpLogger logger}) : logger = logger ?? EmptyHttpLogger();
 
   T convert(Response response);
 
@@ -59,9 +56,7 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> _execute(
       _CustomClient client, Future<Response> futureResponse) async {
     try {
-      Response response = await futureResponse;
-      response =
-          (interceptor != null) ? interceptor.response(response) : response;
+      final Response response = await futureResponse;
       logger.response(response);
 
       return HttpResult<T>.result(response, _data(response));
@@ -72,7 +67,7 @@ abstract class ValuedHttpClient<T> {
     }
   }
 
-  _CustomClient _client() => _CustomClient(interceptor, logger);
+  _CustomClient _client() => _CustomClient(logger);
 
   T _data(Response response) {
     return ((response != null) &&
@@ -84,8 +79,7 @@ abstract class ValuedHttpClient<T> {
 }
 
 class EmptyHttpClient extends ValuedHttpClient<void> {
-  EmptyHttpClient({HttpInterceptor interceptor, HttpLogger logger})
-      : super(interceptor: interceptor, logger: logger);
+  EmptyHttpClient({HttpLogger logger}) : super(logger: logger);
 
   @override
   void convert(Response response) {}
@@ -93,17 +87,14 @@ class EmptyHttpClient extends ValuedHttpClient<void> {
 
 class _CustomClient extends BaseClient {
   final Client _client = Client();
-  final HttpInterceptor _interceptor;
   final HttpLogger _logger;
 
-  _CustomClient(this._interceptor, this._logger);
+  _CustomClient(this._logger);
 
   @override
-  Future<StreamedResponse> send(BaseRequest baseRequest) {
-    final BaseRequest request = (_interceptor != null)
-        ? _interceptor.request(baseRequest)
-        : baseRequest;
+  Future<StreamedResponse> send(BaseRequest request) {
     _logger.request(request);
+    
     return _client.send(request);
   }
 
