@@ -4,11 +4,11 @@ import 'package:dahttp/src/http_logger.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
 
-abstract class ValueHttp<T> {
+abstract class ValuedHttpClient<T> {
   final HttpInterceptor interceptor;
   final HttpLogger logger;
 
-  ValueHttp({this.interceptor, HttpLogger logger})
+  ValuedHttpClient({this.interceptor, HttpLogger logger})
       : logger = logger ?? EmptyHttpLogger();
 
   T convert(Response response);
@@ -83,8 +83,8 @@ abstract class ValueHttp<T> {
   }
 }
 
-class EmptyHttp extends ValueHttp<void> {
-  EmptyHttp({HttpInterceptor interceptor, HttpLogger logger})
+class EmptyHttpClient extends ValuedHttpClient<void> {
+  EmptyHttpClient({HttpInterceptor interceptor, HttpLogger logger})
       : super(interceptor: interceptor, logger: logger);
 
   @override

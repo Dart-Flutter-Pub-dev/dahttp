@@ -71,7 +71,7 @@ void main() {
   });
 }
 
-class GetWebPage extends ValueHttp<WebPage> {
+class GetWebPage extends ValuedHttpClient<WebPage> {
   GetWebPage() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<WebPage>> call() {
@@ -84,7 +84,7 @@ class GetWebPage extends ValueHttp<WebPage> {
   }
 }
 
-class GetEmpty extends EmptyHttp {
+class GetEmpty extends EmptyHttpClient {
   GetEmpty() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
@@ -92,7 +92,7 @@ class GetEmpty extends EmptyHttp {
   }
 }
 
-class PostSample extends EmptyHttp {
+class PostSample extends EmptyHttpClient {
   PostSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
@@ -100,7 +100,7 @@ class PostSample extends EmptyHttp {
   }
 }
 
-class PutSample extends EmptyHttp {
+class PutSample extends EmptyHttpClient {
   PutSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
@@ -108,7 +108,7 @@ class PutSample extends EmptyHttp {
   }
 }
 
-class PatchSample extends EmptyHttp {
+class PatchSample extends EmptyHttpClient {
   PatchSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
@@ -116,7 +116,7 @@ class PatchSample extends EmptyHttp {
   }
 }
 
-class DeleteSample extends EmptyHttp {
+class DeleteSample extends EmptyHttpClient {
   DeleteSample() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
@@ -124,7 +124,7 @@ class DeleteSample extends EmptyHttp {
   }
 }
 
-class NonExistentEndPoint extends EmptyHttp {
+class NonExistentEndPoint extends EmptyHttpClient {
   NonExistentEndPoint() : super(logger: DefaultHttpLogger());
 
   static const String URL = 'https://nonexistent.com';

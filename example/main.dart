@@ -49,7 +49,7 @@ Future<void> main() async {
 }
 
 @immutable
-class GetDogCeo extends ValueHttp<DogCeo> {
+class GetDogCeo extends ValuedHttpClient<DogCeo> {
   Future<HttpResult<DogCeo>> call() {
     return super.get('https://dog.ceo/api/breeds/image/random');
   }
