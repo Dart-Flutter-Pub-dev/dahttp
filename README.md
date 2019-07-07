@@ -8,15 +8,15 @@ Add the following dependencies to your `pubspec.yaml`:
 
 ```yaml
 dependencies: 
-  dahttp: ^1.7.0
+  dahttp: ^1.8.0
 ```
 
 ## Example
 
 ```dart
-main() async {
-  var getDogCeo = GetDogCeo();
-  var result = await getDogCeo.call();
+Future<void> main() async {
+  final GetDogCeo getDogCeo = GetDogCeo();
+  final HttpResult<DogCeo> result = await getDogCeo.call();
 
   // checking boolean properties
   if (result.isSuccess) {
@@ -61,7 +61,7 @@ main() async {
 
 ```dart
 @immutable
-class GetDogCeo extends ValueHttp<DogCeo> {
+class GetDogCeo extends ValuedHttpClient<DogCeo> {
   Future<HttpResult<DogCeo>> call() {
     return super.get('https://dog.ceo/api/breeds/image/random');
   }
@@ -78,10 +78,10 @@ class GetDogCeo extends ValueHttp<DogCeo> {
 class DogCeo {
   final String url;
 
-  DogCeo(this.url);
+  const DogCeo(this.url);
 
   static DogCeo fromJson(String json) {
-    var data = jsonDecode(json);
+    final dynamic data = jsonDecode(json);
 
     return DogCeo(data['message']);
   }

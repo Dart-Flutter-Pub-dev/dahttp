@@ -38,3 +38,7 @@
 ## [1.7.0] - 2019-07-07
 
 * Improved HTTP logger
+
+## [1.8.0] - 2019-07-07
+
+* Added query parameters
