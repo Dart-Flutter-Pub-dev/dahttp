@@ -46,3 +46,7 @@
 ## [1.9.0] - 2019-07-09
 
 * Added path parameters
+
+## [1.9.1] - 2019-07-09
+
+* Added host parameter
