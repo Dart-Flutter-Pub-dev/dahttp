@@ -8,7 +8,7 @@ Add the following dependencies to your `pubspec.yaml`:
 
 ```yaml
 dependencies: 
-  dahttp: ^1.8.0
+  dahttp: ^1.9.0
 ```
 
 ## Example
@@ -62,14 +62,11 @@ Future<void> main() async {
 ```dart
 @immutable
 class GetDogCeo extends ValuedHttpClient<DogCeo> {
-  Future<HttpResult<DogCeo>> call() {
-    return super.get('https://dog.ceo/api/breeds/image/random');
-  }
+  Future<HttpResult<DogCeo>> call() =>
+      super.get('https://dog.ceo/api/breeds/image/random');
 
   @override
-  DogCeo convert(Response response) {
-    return DogCeo.fromJson(response.body);
-  }
+  DogCeo convert(Response response) => DogCeo.fromJson(response.body);
 }
 ```
 

@@ -11,21 +11,28 @@ abstract class ValuedHttpClient<T> {
   T convert(Response response);
 
   Future<HttpResult<T>> head(String url,
-      {Map<String, dynamic> query, Map<String, String> headers}) async {
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
+      Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _process(client, client.head(_url(url, query), headers: headers));
+    return _process(
+        client, client.head(_route(url, path, query), headers: headers));
   }
 
   Future<HttpResult<T>> get(String url,
-      {Map<String, dynamic> query, Map<String, String> headers}) async {
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
+      Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _process(client, client.get(_url(url, query), headers: headers));
+    return _process(
+        client, client.get(_route(url, path, query), headers: headers));
   }
 
   Future<HttpResult<T>> post(String url,
-      {Map<String, dynamic> query,
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
       Map<String, String> headers,
       dynamic body,
       Encoding encoding}) async {
@@ -33,12 +40,13 @@ abstract class ValuedHttpClient<T> {
 
     return _process(
         client,
-        client.post(_url(url, query),
+        client.post(_route(url, path, query),
             headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> put(String url,
-      {Map<String, dynamic> query,
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
       Map<String, String> headers,
       dynamic body,
       Encoding encoding}) async {
@@ -46,12 +54,13 @@ abstract class ValuedHttpClient<T> {
 
     return _process(
         client,
-        client.put(_url(url, query),
+        client.put(_route(url, path, query),
             headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> patch(String url,
-      {Map<String, dynamic> query,
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
       Map<String, String> headers,
       dynamic body,
       Encoding encoding}) async {
@@ -59,15 +68,18 @@ abstract class ValuedHttpClient<T> {
 
     return _process(
         client,
-        client.patch(_url(url, query),
+        client.patch(_route(url, path, query),
             headers: headers, body: body, encoding: encoding));
   }
 
   Future<HttpResult<T>> delete(String url,
-      {Map<String, dynamic> query, Map<String, String> headers}) async {
+      {Map<String, dynamic> path,
+      Map<String, dynamic> query,
+      Map<String, String> headers}) async {
     final _CustomClient client = _client();
 
-    return _process(client, client.delete(_url(url, query), headers: headers));
+    return _process(
+        client, client.delete(_route(url, path, query), headers: headers));
   }
 
   Future<HttpResult<T>> _process(
@@ -86,22 +98,42 @@ abstract class ValuedHttpClient<T> {
 
   _CustomClient _client() => _CustomClient(logger);
 
-  String _url(String baseUrl, Map<String, dynamic> queryParameters) {
-    String query = '';
+  String _route(
+      String baseUrl, Map<String, dynamic> path, Map<String, dynamic> query) {
+    final String url = _url(baseUrl, path);
+    final String parameters = _queryParameters(query);
 
-    if (queryParameters != null) {
-      for (String key in queryParameters.keys) {
-        if (query.isEmpty) {
-          query += '?';
-        } else {
-          query += '&';
-        }
+    return '$url$parameters';
+  }
 
-        query += '$key=${queryParameters[key]}';
+  String _url(String url, Map<String, dynamic> path) {
+    String result = url;
+
+    if (path != null) {
+      for (String key in path.keys) {
+        result = result.replaceFirst(key, path[key]);
       }
     }
 
-    return '$baseUrl$query';
+    return result;
+  }
+
+  String _queryParameters(Map<String, dynamic> query) {
+    String result = '';
+
+    if (query != null) {
+      for (String key in query.keys) {
+        if (result.isEmpty) {
+          result += '?';
+        } else {
+          result += '&';
+        }
+
+        result += '$key=${query[key]}';
+      }
+    }
+
+    return result;
   }
 
   T _data(Response response) {

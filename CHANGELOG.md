@@ -42,3 +42,7 @@
 ## [1.8.0] - 2019-07-07
 
 * Added query parameters
+
+## [1.9.0] - 2019-07-09
+
+* Added path parameters
