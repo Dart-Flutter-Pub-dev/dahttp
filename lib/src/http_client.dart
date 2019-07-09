@@ -10,86 +10,130 @@ abstract class ValuedHttpClient<T> {
 
   T convert(Response response);
 
-  Future<HttpResult<T>> head(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers}) async {
+  Future<HttpResult<T>> head(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  }) async {
     final _CustomClient client = _client();
 
     return _process(
-        client, client.head(_route(url, host, path, query), headers: headers));
+      client,
+      client.head(
+        _route(url, host, path, query),
+        headers: headers,
+      ),
+    );
   }
 
-  Future<HttpResult<T>> get(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers}) async {
+  Future<HttpResult<T>> get(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  }) async {
     final _CustomClient client = _client();
 
     return _process(
-        client, client.get(_route(url, host, path, query), headers: headers));
+      client,
+      client.get(
+        _route(url, host, path, query),
+        headers: headers,
+      ),
+    );
   }
 
-  Future<HttpResult<T>> post(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers,
-      dynamic body,
-      Encoding encoding}) async {
+  Future<HttpResult<T>> post(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+    dynamic body,
+    Encoding encoding,
+  }) async {
     final _CustomClient client = _client();
 
     return _process(
-        client,
-        client.post(_route(url, host, path, query),
-            headers: headers, body: body, encoding: encoding));
+      client,
+      client.post(
+        _route(url, host, path, query),
+        headers: headers,
+        body: body,
+        encoding: encoding,
+      ),
+    );
   }
 
-  Future<HttpResult<T>> put(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers,
-      dynamic body,
-      Encoding encoding}) async {
+  Future<HttpResult<T>> put(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+    dynamic body,
+    Encoding encoding,
+  }) async {
     final _CustomClient client = _client();
 
     return _process(
-        client,
-        client.put(_route(url, host, path, query),
-            headers: headers, body: body, encoding: encoding));
+      client,
+      client.put(
+        _route(url, host, path, query),
+        headers: headers,
+        body: body,
+        encoding: encoding,
+      ),
+    );
   }
 
-  Future<HttpResult<T>> patch(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers,
-      dynamic body,
-      Encoding encoding}) async {
+  Future<HttpResult<T>> patch(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+    dynamic body,
+    Encoding encoding,
+  }) async {
     final _CustomClient client = _client();
 
     return _process(
-        client,
-        client.patch(_route(url, host, path, query),
-            headers: headers, body: body, encoding: encoding));
+      client,
+      client.patch(
+        _route(url, host, path, query),
+        headers: headers,
+        body: body,
+        encoding: encoding,
+      ),
+    );
   }
 
-  Future<HttpResult<T>> delete(String url,
-      {String host,
-      Map<String, dynamic> path,
-      Map<String, dynamic> query,
-      Map<String, String> headers}) async {
+  Future<HttpResult<T>> delete(
+    String url, {
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+    Map<String, String> headers,
+  }) async {
     final _CustomClient client = _client();
 
-    return _process(client,
-        client.delete(_route(url, host, path, query), headers: headers));
+    return _process(
+      client,
+      client.delete(
+        _route(url, host, path, query),
+        headers: headers,
+      ),
+    );
   }
 
   Future<HttpResult<T>> _process(
-      _CustomClient client, Future<Response> futureResponse) async {
+    _CustomClient client,
+    Future<Response> futureResponse,
+  ) async {
     try {
       final Response response = await futureResponse;
       logger.response(response);
@@ -104,15 +148,23 @@ abstract class ValuedHttpClient<T> {
 
   _CustomClient _client() => _CustomClient(logger);
 
-  String _route(String baseUrl, String host, Map<String, dynamic> path,
-      Map<String, dynamic> query) {
+  String _route(
+    String baseUrl,
+    String host,
+    Map<String, dynamic> path,
+    Map<String, dynamic> query,
+  ) {
     final String url = _url(baseUrl, host, path);
     final String parameters = _queryParameters(query);
 
     return '$url$parameters';
   }
 
-  String _url(String url, String host, Map<String, dynamic> path) {
+  String _url(
+    String url,
+    String host,
+    Map<String, dynamic> path,
+  ) {
     String result = (host != null) ? '$host$url' : url;
 
     if (path != null) {

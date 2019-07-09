@@ -36,11 +36,12 @@ class HttpResult<T> {
   bool hasStatus(int code) =>
       (_response != null) && (_response.statusCode == code);
 
-  void handle(
-      {OnSuccess<T> success,
-      OnError error,
-      OnException exception,
-      OnFailure failure}) {
+  void handle({
+    OnSuccess<T> success,
+    OnError error,
+    OnException exception,
+    OnFailure failure,
+  }) {
     if (isSuccess) {
       success?.call(_data, _response);
     } else if (isError && (error != null)) {
@@ -52,11 +53,12 @@ class HttpResult<T> {
     }
   }
 
-  void handleEmpty(
-      {OnSuccessEmpty successful,
-      OnError error,
-      OnException exception,
-      OnFailure failure}) {
+  void handleEmpty({
+    OnSuccessEmpty successful,
+    OnError error,
+    OnException exception,
+    OnFailure failure,
+  }) {
     if (isSuccess) {
       successful?.call(_response);
     } else if (isError && (error != null)) {
