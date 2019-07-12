@@ -50,3 +50,7 @@
 ## [1.9.1] - 2019-07-09
 
 * Added host parameter
+
+## [1.9.2] - 2019-07-12
+
+* Added method to check for status codes

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart';
 
 class HttpResult<T> {
@@ -24,6 +26,62 @@ class HttpResult<T> {
 
   bool get isError => (_response != null) && (_response.statusCode >= 400);
 
+  bool get isOk => _is(HttpStatus.ok);
+
+  bool get isCreated => _is(HttpStatus.created);
+
+  bool get isAccepted => _is(HttpStatus.accepted);
+
+  bool get isNoContent => _is(HttpStatus.noContent);
+
+  bool get isBadRequest => _is(HttpStatus.badRequest);
+
+  bool get isAnauthorized => _is(HttpStatus.unauthorized);
+
+  bool get isForbidden => _is(HttpStatus.forbidden);
+
+  bool get isNotFound => _is(HttpStatus.notFound);
+
+  bool get isMethodNotAllowed => _is(HttpStatus.methodNotAllowed);
+
+  bool get isNotAcceptable => _is(HttpStatus.notAcceptable);
+
+  bool get isRequestTimeout => _is(HttpStatus.requestTimeout);
+
+  bool get isConflict => _is(HttpStatus.conflict);
+
+  bool get isGone => _is(HttpStatus.gone);
+
+  bool get isLengthRequired => _is(HttpStatus.lengthRequired);
+
+  bool get isPreconditionFailed => _is(HttpStatus.preconditionFailed);
+
+  bool get isRequestEntityTooLarge => _is(HttpStatus.requestEntityTooLarge);
+
+  bool get isUnsupportedMediaType => _is(HttpStatus.unsupportedMediaType);
+
+  bool get isExpectationFailed => _is(HttpStatus.expectationFailed);
+
+  bool get isLocked => _is(HttpStatus.locked);
+
+  bool get isFailedDependency => _is(HttpStatus.failedDependency);
+
+  bool get isPreconditionRequired => _is(HttpStatus.preconditionRequired);
+
+  bool get isTooManyRequests => _is(HttpStatus.tooManyRequests);
+
+  bool get isInternalServerError => _is(HttpStatus.internalServerError);
+
+  bool get isNotImplemented => _is(HttpStatus.notImplemented);
+
+  bool get isBadGateway => _is(HttpStatus.badGateway);
+
+  bool get isServiceUnavailable => _is(HttpStatus.serviceUnavailable);
+
+  bool get isGatewayTimeout => _is(HttpStatus.gatewayTimeout);
+
+  bool hasStatus(int code) => _is(code);
+
   bool get hasException => _exception != null;
 
   bool get hasData => _data != null;
@@ -32,9 +90,6 @@ class HttpResult<T> {
 
   Map<String, String> get headers =>
       (_response != null) ? _response.headers : <String, String>{};
-
-  bool hasStatus(int code) =>
-      (_response != null) && (_response.statusCode == code);
 
   void handle({
     OnSuccess<T> success,
@@ -109,6 +164,8 @@ class HttpResult<T> {
 
     return this;
   }
+
+  bool _is(int code) => (_response != null) && (_response.statusCode == code);
 }
 
 typedef OnSuccess<T> = void Function(T data, Response response);
