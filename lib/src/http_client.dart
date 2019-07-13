@@ -13,8 +13,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> head(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
   }) async {
     final _CustomClient client = _client();
@@ -31,8 +31,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> get(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
   }) async {
     final _CustomClient client = _client();
@@ -49,8 +49,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> post(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
     dynamic body,
     Encoding encoding,
@@ -71,8 +71,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> put(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
     dynamic body,
     Encoding encoding,
@@ -93,8 +93,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> patch(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
     dynamic body,
     Encoding encoding,
@@ -115,8 +115,8 @@ abstract class ValuedHttpClient<T> {
   Future<HttpResult<T>> delete(
     String url, {
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
     Map<String, String> headers,
   }) async {
     final _CustomClient client = _client();
@@ -151,8 +151,8 @@ abstract class ValuedHttpClient<T> {
   String _route(
     String baseUrl,
     String host,
-    Map<String, dynamic> path,
-    Map<String, dynamic> query,
+    Map<String, Object> path,
+    Map<String, Object> query,
   ) {
     final String url = _url(baseUrl, host, path);
     final String parameters = _queryParameters(query);
@@ -163,7 +163,7 @@ abstract class ValuedHttpClient<T> {
   String _url(
     String url,
     String host,
-    Map<String, dynamic> path,
+    Map<String, Object> path,
   ) {
     String result = (host != null) ? '$host$url' : url;
 
@@ -176,7 +176,7 @@ abstract class ValuedHttpClient<T> {
     return result;
   }
 
-  String _queryParameters(Map<String, dynamic> query) {
+  String _queryParameters(Map<String, Object> query) {
     String result = '';
 
     if (query != null) {

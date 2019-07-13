@@ -78,7 +78,7 @@ class GetWebPage extends ValuedHttpClient<WebPage> {
 
   Future<HttpResult<WebPage>> call() {
     return super.get('$URL/webpage',
-        query: <String, dynamic>{'foo': 'bar', 'test': 123});
+        query: <String, Object>{'foo': 'bar', 'test': 123});
   }
 
   @override
