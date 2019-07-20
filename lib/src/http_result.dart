@@ -80,6 +80,9 @@ class HttpResult<T> {
 
   bool get isGatewayTimeout => _is(HttpStatus.gatewayTimeout);
 
+  bool get isInternetConnection =>
+      hasException && (exception is SocketException);
+
   bool hasStatus(int code) => _is(code);
 
   bool get hasException => _exception != null;

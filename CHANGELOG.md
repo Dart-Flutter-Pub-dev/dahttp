@@ -62,3 +62,7 @@
 ## [1.9.4] - 2019-07-20
 
 * Fixed typo
+
+## [1.9.5] - 2019-07-20
+
+* Added method to check for Internet connection
