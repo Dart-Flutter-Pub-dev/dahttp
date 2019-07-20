@@ -58,3 +58,7 @@
 ## [1.9.3] - 2019-07-13
 
 * Fixed type of parameters
+
+## [1.9.4] - 2019-07-20
+
+* Fixed typo

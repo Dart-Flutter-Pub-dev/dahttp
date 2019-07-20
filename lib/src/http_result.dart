@@ -36,7 +36,7 @@ class HttpResult<T> {
 
   bool get isBadRequest => _is(HttpStatus.badRequest);
 
-  bool get isAnauthorized => _is(HttpStatus.unauthorized);
+  bool get isUnauthorized => _is(HttpStatus.unauthorized);
 
   bool get isForbidden => _is(HttpStatus.forbidden);
 
