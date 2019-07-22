@@ -66,3 +66,7 @@
 ## [1.9.5] - 2019-07-20
 
 * Added method to check for Internet connection
+
+## [2.0.0] - 2019-07-22
+
+* Logging exceptions

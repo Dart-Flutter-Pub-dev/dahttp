@@ -43,6 +43,9 @@ class DefaultHttpLogger extends HttpLogger {
 
     print('<-- END [$tag]');
   }
+
+  @override
+  void exception(dynamic exception) => print(exception);
 }
 
 class EmptyHttpLogger extends HttpLogger {
@@ -51,10 +54,15 @@ class EmptyHttpLogger extends HttpLogger {
 
   @override
   void response(Response response) {}
+
+  @override
+  void exception(dynamic exception) {}
 }
 
 abstract class HttpLogger {
   void request(Request request);
 
   void response(Response response);
+
+  void exception(dynamic exception);
 }

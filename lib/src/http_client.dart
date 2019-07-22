@@ -140,6 +140,7 @@ abstract class ValuedHttpClient<T> {
 
       return HttpResult<T>.result(response, _data(response));
     } catch (e) {
+      logger.exception(e);
       return HttpResult<T>.exception(e);
     } finally {
       client.close();
