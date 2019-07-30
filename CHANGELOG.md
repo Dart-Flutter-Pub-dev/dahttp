@@ -70,3 +70,7 @@
 ## [2.0.0] - 2019-07-22
 
 * Logging exceptions
+
+## [2.1.0] - 2019-07-30
+
+* Added `alter` method

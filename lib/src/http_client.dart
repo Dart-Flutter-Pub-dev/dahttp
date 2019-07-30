@@ -10,6 +10,8 @@ abstract class ValuedHttpClient<T> {
 
   T convert(Response response);
 
+  T alter(T input) => input;
+
   Future<HttpResult<T>> head(
     String url, {
     String host,
@@ -199,7 +201,7 @@ abstract class ValuedHttpClient<T> {
     return ((response != null) &&
             (response.statusCode >= 200) &&
             (response.statusCode <= 299))
-        ? _convert(response)
+        ? alter(_convert(response))
         : null;
   }
 
