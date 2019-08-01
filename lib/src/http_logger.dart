@@ -1,8 +1,12 @@
 import 'package:http/http.dart';
 
 class DefaultHttpLogger extends HttpLogger {
+  final bool headers;
+  final bool body;
   DateTime start;
   String tag;
+
+  DefaultHttpLogger({this.headers, this.body});
 
   @override
   void request(Request request) {
@@ -12,13 +16,15 @@ class DefaultHttpLogger extends HttpLogger {
     print(
         '--> ${request.method} ${request.url} (${request.contentLength}-byte body) [$tag]');
 
-    final Map<String, String> headers = request.headers;
+    if ((headers != null) && headers) {
+      final Map<String, String> headers = request.headers;
 
-    for (String header in headers.keys) {
-      print('$header: ${headers[header]}');
+      for (String header in headers.keys) {
+        print('$header: ${headers[header]}');
+      }
     }
 
-    if (request.body.isNotEmpty) {
+    if ((body != null) && body && request.body.isNotEmpty) {
       print(request.body);
     }
 
@@ -31,13 +37,15 @@ class DefaultHttpLogger extends HttpLogger {
     print(
         '<-- ${response.statusCode} ${response.reasonPhrase} (${difference.inMilliseconds}ms) [$tag]');
 
-    final Map<String, String> headers = response.headers;
+    if ((headers != null) && headers) {
+      final Map<String, String> headers = response.headers;
 
-    for (String header in headers.keys) {
-      print('$header: ${headers[header]}');
+      for (String header in headers.keys) {
+        print('$header: ${headers[header]}');
+      }
     }
 
-    if (response.body.isNotEmpty) {
+    if ((body != null) && body && response.body.isNotEmpty) {
       print(response.body);
     }
 

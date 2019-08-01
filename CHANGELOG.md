@@ -74,3 +74,7 @@
 ## [2.1.0] - 2019-07-30
 
 * Added `alter` method
+
+## [2.2.0] - 2019-08-01
+
+* Improved DefaultHttpLogger
