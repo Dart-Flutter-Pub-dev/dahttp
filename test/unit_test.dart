@@ -12,54 +12,54 @@ void main() {
       final GetWebPage getWebPage = GetWebPage();
       final HttpResult<WebPage> result = await getWebPage.call();
 
-      expect(result.response.statusCode, equals(200));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isNotEmpty);
+      expect(result.status, equals(200));
+      expect(result.success, isTrue);
+      expect(result.body, isNotEmpty);
     });
 
     test('get empty', () async {
       final GetEmpty getEmpty = GetEmpty();
       final HttpResult<void> result = await getEmpty.call();
 
-      expect(result.response.statusCode, equals(200));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isEmpty);
+      expect(result.status, equals(200));
+      expect(result.success, isTrue);
+      expect(result.body, isEmpty);
     });
 
     test('post web page', () async {
       final PostSample postSample = PostSample();
       final HttpResult<void> result = await postSample.call();
 
-      expect(result.response.statusCode, equals(201));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isEmpty);
+      expect(result.status, equals(201));
+      expect(result.success, isTrue);
+      expect(result.body, isEmpty);
     });
 
     test('put web page', () async {
       final PutSample putSample = PutSample();
       final HttpResult<void> result = await putSample.call();
 
-      expect(result.response.statusCode, equals(200));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isEmpty);
+      expect(result.status, equals(200));
+      expect(result.success, isTrue);
+      expect(result.body, isEmpty);
     });
 
     test('patch web page', () async {
       final PatchSample patchSample = PatchSample();
       final HttpResult<void> result = await patchSample.call();
 
-      expect(result.response.statusCode, equals(200));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isEmpty);
+      expect(result.status, equals(200));
+      expect(result.success, isTrue);
+      expect(result.body, isEmpty);
     });
 
     test('delete web page', () async {
       final DeleteSample deleteSample = DeleteSample();
       final HttpResult<void> result = await deleteSample.call();
 
-      expect(result.response.statusCode, equals(200));
-      expect(result.isSuccess, isTrue);
-      expect(result.response.body, isEmpty);
+      expect(result.status, equals(200));
+      expect(result.success, isTrue);
+      expect(result.body, isEmpty);
     });
 
     test('non existent end point', () async {

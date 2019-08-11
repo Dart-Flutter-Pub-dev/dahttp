@@ -83,3 +83,4 @@
 
 * Added `status` method
 * Added `request` method
+* Code refactoring and renaming

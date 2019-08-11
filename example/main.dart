@@ -9,20 +9,20 @@ Future<void> main() async {
   final HttpResult<DogCeo> result = await getDogCeo.call();
 
   // checking boolean properties
-  if (result.isSuccess) {
+  if (result.success) {
     print('Success: ${result.data.url}');
-  } else if (result.isError) {
+  } else if (result.error) {
     print('Error: ${result.response.statusCode}');
   } else if (result.hasException) {
     print('Exception: ${result.exception}');
   }
 
   // passing callbacks (named parameters)
-  result.handle(success: (DogCeo dog, Response response) {
+  result.handle(onSuccess: (DogCeo dog, Response response) {
     print('Success: ${dog.url}');
-  }, error: (Response response) {
+  }, onError: (Response response) {
     print('Error: ${response.statusCode}');
-  }, exception: (dynamic exception) {
+  }, onException: (dynamic exception) {
     print('Exception: $exception');
   });
 
