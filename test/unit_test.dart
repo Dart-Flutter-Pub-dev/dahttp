@@ -3,7 +3,6 @@ import 'package:dahttp/src/http_client.dart';
 import 'package:dahttp/src/http_logger.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -137,7 +136,6 @@ class NonExistentEndPoint extends EmptyHttpClient {
   }
 }
 
-@immutable
 class WebPage {
   final String url;
 

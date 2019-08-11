@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:dahttp/src/http_client.dart';
 import 'package:dahttp/src/http_result.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 Future<void> main() async {
   final GetDogCeo getDogCeo = GetDogCeo();
@@ -48,7 +47,6 @@ Future<void> main() async {
     });
 }
 
-@immutable
 class GetDogCeo extends ValuedHttpClient<DogCeo> {
   Future<HttpResult<DogCeo>> call() =>
       super.get('https://dog.ceo/api/breeds/image/random');
@@ -57,7 +55,6 @@ class GetDogCeo extends ValuedHttpClient<DogCeo> {
   DogCeo convert(Response response) => DogCeo.fromJson(response.body);
 }
 
-@immutable
 class DogCeo {
   final String url;
 
