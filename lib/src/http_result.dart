@@ -20,11 +20,9 @@ class HttpResult<T> {
   dynamic get exception => _exception;
 
   bool get isSuccess =>
-      (_response != null) &&
-      (_response.statusCode >= 200) &&
-      (_response.statusCode <= 299);
+      (_response != null) && (status >= 200) && (status <= 299);
 
-  bool get isError => (_response != null) && (_response.statusCode >= 400);
+  bool get isError => (_response != null) && (status >= 400);
 
   bool get isOk => _is(HttpStatus.ok);
 
@@ -89,6 +87,8 @@ class HttpResult<T> {
 
   bool get hasData => _data != null;
 
+  int get status => (_response != null) ? _response.statusCode : 0;
+  
   String get body => (_response != null) ? _response.body : '';
 
   Map<String, String> get headers =>
@@ -168,7 +168,7 @@ class HttpResult<T> {
     return this;
   }
 
-  bool _is(int code) => (_response != null) && (_response.statusCode == code);
+  bool _is(int code) => status == code;
 }
 
 typedef OnSuccess<T> = void Function(T data, Response response);
