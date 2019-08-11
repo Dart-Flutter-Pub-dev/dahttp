@@ -12,7 +12,7 @@ class HttpResult<T> {
       : _response = null,
         _data = null;
 
-  BaseRequest get request => (_response != null) ? _response.request : null;
+  BaseRequest get request => hasResponse ? _response.request : null;
 
   Response get response => _response;
 
@@ -22,16 +22,18 @@ class HttpResult<T> {
 
   bool hasStatus(int code) => status == code;
 
+  bool get hasResponse => _response != null;
+
   bool get hasData => _data != null;
 
   bool get hasException => _exception != null;
 
-  int get status => (_response != null) ? _response.statusCode : 0;
+  int get status => hasResponse ? _response.statusCode : 0;
 
-  String get body => (_response != null) ? _response.body : '';
+  String get body => hasResponse ? _response.body : '';
 
   Map<String, String> get headers =>
-      (_response != null) ? _response.headers : <String, String>{};
+      hasResponse ? _response.headers : <String, String>{};
 
   bool get success => (status >= 200) && (status <= 299);
 

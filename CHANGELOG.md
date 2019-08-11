@@ -84,3 +84,7 @@
 * Added `status` method
 * Added `request` method
 * Code refactoring and renaming
+
+## [3.0.1] - 2019-09-11
+
+* Added `hasResponse` method
