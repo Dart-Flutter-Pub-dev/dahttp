@@ -78,3 +78,8 @@
 ## [2.2.0] - 2019-08-01
 
 * Improved DefaultHttpLogger
+
+## [3.0.0] - 2019-09-11
+
+* Added `status` method
+* Added `request` method

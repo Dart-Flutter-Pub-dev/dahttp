@@ -87,8 +87,10 @@ class HttpResult<T> {
 
   bool get hasData => _data != null;
 
+  BaseRequest get request => (_response != null) ? _response.request : null;
+
   int get status => (_response != null) ? _response.statusCode : 0;
-  
+
   String get body => (_response != null) ? _response.body : '';
 
   Map<String, String> get headers =>
