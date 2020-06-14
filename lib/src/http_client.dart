@@ -171,7 +171,7 @@ abstract class ValuedHttpClient<T> {
     String result = (host != null) ? '$host$url' : url;
 
     if (path != null) {
-      for (String key in path.keys) {
+      for (final String key in path.keys) {
         result = result.replaceFirst(key, path[key]);
       }
     }
@@ -183,7 +183,7 @@ abstract class ValuedHttpClient<T> {
     String result = '';
 
     if (query != null) {
-      for (String key in query.keys) {
+      for (final String key in query.keys) {
         if (result.isEmpty) {
           result += '?';
         } else {

@@ -19,7 +19,7 @@ class DefaultHttpLogger extends HttpLogger {
     if ((headers != null) && headers) {
       final Map<String, String> headers = request.headers;
 
-      for (String header in headers.keys) {
+      for (final String header in headers.keys) {
         print('$header: ${headers[header]}');
       }
     }
@@ -40,7 +40,7 @@ class DefaultHttpLogger extends HttpLogger {
     if ((headers != null) && headers) {
       final Map<String, String> headers = response.headers;
 
-      for (String header in headers.keys) {
+      for (final String header in headers.keys) {
         print('$header: ${headers[header]}');
       }
     }
