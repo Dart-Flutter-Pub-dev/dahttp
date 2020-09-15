@@ -4,11 +4,11 @@ HTTP wrapper for Dart with integrated logger design to be used for REST APIs.
 
 ## Installation
 
-Add the following dependencies to your `pubspec.yaml`:
+Add the following dependency to your `pubspec.yaml`:
 
 ```yaml
 dependencies: 
-  dahttp: ^3.0.1
+  dahttp: ^3.2.0
 ```
 
 ## Example

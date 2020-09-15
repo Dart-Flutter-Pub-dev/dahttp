@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:http/http.dart';
 
 class HttpResult<T> {
@@ -39,66 +38,59 @@ class HttpResult<T> {
 
   bool get error => status >= 400;
 
-  bool get statusOk => hasStatus(HttpStatus.ok);
+  bool get statusOk => hasStatus(200);
 
-  bool get statusCreated => hasStatus(HttpStatus.created);
+  bool get statusCreated => hasStatus(201);
 
-  bool get statusAccepted => hasStatus(HttpStatus.accepted);
+  bool get statusAccepted => hasStatus(202);
 
-  bool get statusNoContent => hasStatus(HttpStatus.noContent);
+  bool get statusNoContent => hasStatus(204);
 
-  bool get statusBadRequest => hasStatus(HttpStatus.badRequest);
+  bool get statusBadRequest => hasStatus(400);
 
-  bool get statusUnauthorized => hasStatus(HttpStatus.unauthorized);
+  bool get statusUnauthorized => hasStatus(401);
 
-  bool get statusForbidden => hasStatus(HttpStatus.forbidden);
+  bool get statusForbidden => hasStatus(403);
 
-  bool get statusNotFound => hasStatus(HttpStatus.notFound);
+  bool get statusNotFound => hasStatus(404);
 
-  bool get statusMethodNotAllowed => hasStatus(HttpStatus.methodNotAllowed);
+  bool get statusMethodNotAllowed => hasStatus(405);
 
-  bool get statusNotAcceptable => hasStatus(HttpStatus.notAcceptable);
+  bool get statusNotAcceptable => hasStatus(406);
 
-  bool get statusRequestTimeout => hasStatus(HttpStatus.requestTimeout);
+  bool get statusRequestTimeout => hasStatus(408);
 
-  bool get statusConflict => hasStatus(HttpStatus.conflict);
+  bool get statusConflict => hasStatus(409);
 
-  bool get statusGone => hasStatus(HttpStatus.gone);
+  bool get statusGone => hasStatus(410);
 
-  bool get statusLengthRequired => hasStatus(HttpStatus.lengthRequired);
+  bool get statusLengthRequired => hasStatus(411);
 
-  bool get statusPreconditionFailed => hasStatus(HttpStatus.preconditionFailed);
+  bool get statusPreconditionFailed => hasStatus(412);
 
-  bool get statusRequestEntityTooLarge =>
-      hasStatus(HttpStatus.requestEntityTooLarge);
+  bool get statusRequestEntityTooLarge => hasStatus(413);
 
-  bool get statusUnsupportedMediaType =>
-      hasStatus(HttpStatus.unsupportedMediaType);
+  bool get statusUnsupportedMediaType => hasStatus(415);
 
-  bool get statusExpectationFailed => hasStatus(HttpStatus.expectationFailed);
+  bool get statusExpectationFailed => hasStatus(417);
 
-  bool get statusLocked => hasStatus(HttpStatus.locked);
+  bool get statusLocked => hasStatus(423);
 
-  bool get statusFailedDependency => hasStatus(HttpStatus.failedDependency);
+  bool get statusFailedDependency => hasStatus(424);
 
-  bool get statusPreconditionRequired =>
-      hasStatus(HttpStatus.preconditionRequired);
+  bool get statusPreconditionRequired => hasStatus(428);
 
-  bool get statusTooManyRequests => hasStatus(HttpStatus.tooManyRequests);
+  bool get statusTooManyRequests => hasStatus(429);
 
-  bool get statusInternalServerError =>
-      hasStatus(HttpStatus.internalServerError);
+  bool get statusInternalServerError => hasStatus(500);
 
-  bool get statusNotImplemented => hasStatus(HttpStatus.notImplemented);
+  bool get statusNotImplemented => hasStatus(501);
 
-  bool get statusBadGateway => hasStatus(HttpStatus.badGateway);
+  bool get statusBadGateway => hasStatus(502);
 
-  bool get statusServiceUnavailable => hasStatus(HttpStatus.serviceUnavailable);
+  bool get statusServiceUnavailable => hasStatus(503);
 
-  bool get statusGatewayTimeout => hasStatus(HttpStatus.gatewayTimeout);
-
-  bool get statusInternetConnection =>
-      hasException && (exception is SocketException);
+  bool get statusGatewayTimeout => hasStatus(504);
 
   void handle({
     OnSuccess<T> onSuccess,

@@ -88,3 +88,7 @@
 ## [3.0.1] - 2019-09-11
 
 * Added `hasResponse` method
+
+## [3.2.0] - 2020-09-15
+
+* Code cleanup
