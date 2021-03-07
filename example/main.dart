@@ -56,7 +56,7 @@ class GetDogCeo extends ValuedHttpClient<DogCeo> {
 }
 
 class DogCeo {
-  final String url;
+  final String? url;
 
   const DogCeo(this.url);
 

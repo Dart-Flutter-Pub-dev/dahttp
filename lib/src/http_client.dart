@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 abstract class ValuedHttpClient<T> {
   final HttpLogger logger;
 
-  ValuedHttpClient({HttpLogger logger}) : logger = logger ?? EmptyHttpLogger();
+  ValuedHttpClient({this.logger = const EmptyHttpLogger()});
 
   T convert(Response response);
 
@@ -14,17 +14,17 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> head(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.head(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
       ),
     );
@@ -32,17 +32,17 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> get(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.get(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
       ),
     );
@@ -50,19 +50,19 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> post(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
     dynamic body,
-    Encoding encoding,
+    Encoding? encoding,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.post(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
         body: body,
         encoding: encoding,
@@ -72,19 +72,19 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> put(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
     dynamic body,
-    Encoding encoding,
+    Encoding? encoding,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.put(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
         body: body,
         encoding: encoding,
@@ -94,19 +94,19 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> patch(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
     dynamic body,
-    Encoding encoding,
+    Encoding? encoding,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.patch(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
         body: body,
         encoding: encoding,
@@ -116,17 +116,17 @@ abstract class ValuedHttpClient<T> {
 
   Future<HttpResult<T>> delete(
     String url, {
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
-    Map<String, String> headers,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
+    Map<String, String>? headers,
   }) async {
     final _CustomClient client = _client();
 
     return _process(
       client,
       client.delete(
-        _route(url, host, path, query),
+        Uri.parse(_route(url, host, path, query)),
         headers: headers,
       ),
     );
@@ -153,9 +153,9 @@ abstract class ValuedHttpClient<T> {
 
   String _route(
     String baseUrl,
-    String host,
-    Map<String, Object> path,
-    Map<String, Object> query,
+    String? host,
+    Map<String, Object>? path,
+    Map<String, Object>? query,
   ) {
     final String url = _url(baseUrl, host, path);
     final String parameters = _queryParameters(query);
@@ -165,21 +165,21 @@ abstract class ValuedHttpClient<T> {
 
   String _url(
     String url,
-    String host,
-    Map<String, Object> path,
+    String? host,
+    Map<String, Object>? path,
   ) {
     String result = (host != null) ? '$host$url' : url;
 
     if (path != null) {
       for (final String key in path.keys) {
-        result = result.replaceFirst(key, path[key]);
+        result = result.replaceFirst(key, path[key] as String);
       }
     }
 
     return result;
   }
 
-  String _queryParameters(Map<String, Object> query) {
+  String _queryParameters(Map<String, Object>? query) {
     String result = '';
 
     if (query != null) {
@@ -197,10 +197,8 @@ abstract class ValuedHttpClient<T> {
     return result;
   }
 
-  T _data(Response response) {
-    return ((response != null) &&
-            (response.statusCode >= 200) &&
-            (response.statusCode <= 299))
+  T? _data(Response response) {
+    return ((response.statusCode >= 200) && (response.statusCode <= 299))
         ? alter(_convert(response))
         : null;
   }
@@ -216,7 +214,8 @@ abstract class ValuedHttpClient<T> {
 }
 
 class EmptyHttpClient extends ValuedHttpClient<void> {
-  EmptyHttpClient({HttpLogger logger}) : super(logger: logger);
+  EmptyHttpClient({HttpLogger logger = const EmptyHttpLogger()})
+      : super(logger: logger);
 
   @override
   void convert(Response response) {}
@@ -230,7 +229,7 @@ class _CustomClient extends BaseClient {
 
   @override
   Future<StreamedResponse> send(BaseRequest request) {
-    _logger.request(request);
+    _logger.request(request as Request);
 
     return _client.send(request);
   }

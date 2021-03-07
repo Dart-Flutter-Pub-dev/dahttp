@@ -1,8 +1,8 @@
 import 'package:http/http.dart';
 
 class HttpResult<T> {
-  final Response _response;
-  final T _data;
+  final Response? _response;
+  final T? _data;
   final dynamic _exception;
 
   HttpResult.result(this._response, this._data) : _exception = null;
@@ -11,15 +11,17 @@ class HttpResult<T> {
       : _response = null,
         _data = null;
 
-  BaseRequest get request => hasResponse ? _response.request : null;
+  BaseRequest get request => _response!.request!;
 
-  Response get response => _response;
+  Response get response => _response!;
 
-  T get data => _data;
+  T get data => _data!;
 
   dynamic get exception => _exception;
 
   bool hasStatus(int code) => status == code;
+
+  bool get hasRequest => (_response != null) && (_response!.request != null);
 
   bool get hasResponse => _response != null;
 
@@ -27,12 +29,12 @@ class HttpResult<T> {
 
   bool get hasException => _exception != null;
 
-  int get status => hasResponse ? _response.statusCode : 0;
+  int get status => hasResponse ? _response!.statusCode : 0;
 
-  String get body => hasResponse ? _response.body : '';
+  String get body => hasResponse ? _response!.body : '';
 
   Map<String, String> get headers =>
-      hasResponse ? _response.headers : <String, String>{};
+      hasResponse ? _response!.headers : <String, String>{};
 
   bool get success => (status >= 200) && (status <= 299);
 
@@ -93,42 +95,42 @@ class HttpResult<T> {
   bool get statusGatewayTimeout => hasStatus(504);
 
   void handle({
-    OnSuccess<T> onSuccess,
-    OnError onError,
-    OnException onException,
-    OnFailure onFailure,
+    OnSuccess<T>? onSuccess,
+    OnError? onError,
+    OnException? onException,
+    OnFailure? onFailure,
   }) {
     if (success) {
-      onSuccess?.call(_data, _response);
+      onSuccess?.call(_data!, _response!);
     } else if (error && (onError != null)) {
-      onError(_response);
+      onError(_response!);
     } else if (hasException && (onException != null)) {
       onException(_exception);
     } else {
-      onFailure?.call(_response, _exception);
+      onFailure?.call(_response!, _exception);
     }
   }
 
   void handleEmpty({
-    OnSuccessEmpty onSuccess,
-    OnError onError,
-    OnException onException,
-    OnFailure onFailure,
+    OnSuccessEmpty? onSuccess,
+    OnError? onError,
+    OnException? onException,
+    OnFailure? onFailure,
   }) {
     if (success) {
-      onSuccess?.call(_response);
+      onSuccess?.call(_response!);
     } else if (error && (onError != null)) {
-      onError(_response);
+      onError(_response!);
     } else if (hasException && (onException != null)) {
       onException(_exception);
     } else {
-      onFailure?.call(_response, _exception);
+      onFailure?.call(_response!, _exception);
     }
   }
 
   HttpResult<T> onSuccess(OnSuccess<T> onSuccess) {
     if (success) {
-      onSuccess?.call(_data, _response);
+      onSuccess.call(_data!, _response!);
     }
 
     return this;
@@ -136,7 +138,7 @@ class HttpResult<T> {
 
   HttpResult<T> onSuccessEmpty(OnSuccessEmpty onSuccess) {
     if (success) {
-      onSuccess?.call(_response);
+      onSuccess.call(_response!);
     }
 
     return this;
@@ -144,7 +146,7 @@ class HttpResult<T> {
 
   HttpResult<T> onError(OnError onError) {
     if (error) {
-      onError?.call(_response);
+      onError.call(_response!);
     }
 
     return this;
@@ -152,7 +154,7 @@ class HttpResult<T> {
 
   HttpResult<T> onException(OnException onException) {
     if (hasException) {
-      onException?.call(_exception);
+      onException.call(_exception);
     }
 
     return this;
@@ -160,7 +162,7 @@ class HttpResult<T> {
 
   HttpResult<T> onFailure(OnFailure onFailure) {
     if (error || hasException) {
-      onFailure?.call(_response, _exception);
+      onFailure.call(_response!, _exception);
     }
 
     return this;

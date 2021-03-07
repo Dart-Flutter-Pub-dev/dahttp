@@ -3,10 +3,10 @@ import 'package:http/http.dart';
 class DefaultHttpLogger extends HttpLogger {
   final bool headers;
   final bool body;
-  DateTime start;
-  String tag;
+  late DateTime start;
+  late String tag;
 
-  DefaultHttpLogger({this.headers, this.body});
+  DefaultHttpLogger({this.headers = true, this.body = true});
 
   @override
   void request(Request request) {
@@ -16,7 +16,7 @@ class DefaultHttpLogger extends HttpLogger {
     print(
         '--> ${request.method} ${request.url} (${request.contentLength}-byte body) [$tag]');
 
-    if ((headers != null) && headers) {
+    if (headers) {
       final Map<String, String> headers = request.headers;
 
       for (final String header in headers.keys) {
@@ -24,7 +24,7 @@ class DefaultHttpLogger extends HttpLogger {
       }
     }
 
-    if ((body != null) && body && request.body.isNotEmpty) {
+    if (body && request.body.isNotEmpty) {
       print(request.body);
     }
 
@@ -37,7 +37,7 @@ class DefaultHttpLogger extends HttpLogger {
     print(
         '<-- ${response.statusCode} ${response.reasonPhrase} (${difference.inMilliseconds}ms) [$tag]');
 
-    if ((headers != null) && headers) {
+    if (headers) {
       final Map<String, String> headers = response.headers;
 
       for (final String header in headers.keys) {
@@ -45,7 +45,7 @@ class DefaultHttpLogger extends HttpLogger {
       }
     }
 
-    if ((body != null) && body && response.body.isNotEmpty) {
+    if (body && response.body.isNotEmpty) {
       print(response.body);
     }
 
@@ -57,6 +57,8 @@ class DefaultHttpLogger extends HttpLogger {
 }
 
 class EmptyHttpLogger extends HttpLogger {
+  const EmptyHttpLogger();
+
   @override
   void request(Request request) {}
 
@@ -68,6 +70,8 @@ class EmptyHttpLogger extends HttpLogger {
 }
 
 abstract class HttpLogger {
+  const HttpLogger();
+
   void request(Request request);
 
   void response(Response response);

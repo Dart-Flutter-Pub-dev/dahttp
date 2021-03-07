@@ -20,7 +20,7 @@ void main() {
       final GetEmpty getEmpty = GetEmpty();
       final HttpResult<void> result = await getEmpty.call();
 
-      expect(result.status, equals(200));
+      expect(result.status, equals(204));
       expect(result.success, isTrue);
       expect(result.body, isEmpty);
     });
@@ -56,7 +56,7 @@ void main() {
       final DeleteSample deleteSample = DeleteSample();
       final HttpResult<void> result = await deleteSample.call();
 
-      expect(result.status, equals(200));
+      expect(result.status, equals(204));
       expect(result.success, isTrue);
       expect(result.body, isEmpty);
     });
@@ -70,14 +70,13 @@ void main() {
   });
 }
 
-const String URL = 'https://demo4798213.mockable.io';
+const String URL = 'https://dahttp.free.beeceptor.com';
 
 class GetWebPage extends ValuedHttpClient<WebPage> {
   GetWebPage() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<WebPage>> call() {
-    return super.get('$URL/webpage',
-        query: <String, Object>{'foo': 'bar', 'test': 123});
+    return super.get('$URL/get-full');
   }
 
   @override
@@ -90,7 +89,7 @@ class GetEmpty extends EmptyHttpClient {
   GetEmpty() : super(logger: DefaultHttpLogger());
 
   Future<HttpResult<void>> call() {
-    return super.get('$URL/empty');
+    return super.get('$URL/get-empty');
   }
 }
 
@@ -137,7 +136,7 @@ class NonExistentEndPoint extends EmptyHttpClient {
 }
 
 class WebPage {
-  final String url;
+  final String? url;
 
   const WebPage(this.url);
 

@@ -71,7 +71,7 @@ class GetDogCeo extends ValuedHttpClient<DogCeo> {
 
 ```dart
 class DogCeo {
-  final String url;
+  final String? url;
 
   const DogCeo(this.url);
 
