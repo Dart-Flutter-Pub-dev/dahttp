@@ -11,7 +11,7 @@ class HttpResult<T> {
       : _response = null,
         _data = null;
 
-  BaseRequest get request => _response!.request!;
+  BaseRequest get request => response.request!;
 
   Response get response => _response!;
 
@@ -21,7 +21,7 @@ class HttpResult<T> {
 
   bool hasStatus(int code) => status == code;
 
-  bool get hasRequest => (_response != null) && (_response!.request != null);
+  bool get hasRequest => (_response != null) && (response.request != null);
 
   bool get hasResponse => _response != null;
 
@@ -29,12 +29,12 @@ class HttpResult<T> {
 
   bool get hasException => _exception != null;
 
-  int get status => hasResponse ? _response!.statusCode : 0;
+  int get status => hasResponse ? response.statusCode : 0;
 
-  String get body => hasResponse ? _response!.body : '';
+  String get body => hasResponse ? response.body : '';
 
   Map<String, String> get headers =>
-      hasResponse ? _response!.headers : <String, String>{};
+      hasResponse ? response.headers : <String, String>{};
 
   bool get success => (status >= 200) && (status <= 299);
 
@@ -101,13 +101,13 @@ class HttpResult<T> {
     OnFailure? onFailure,
   }) {
     if (success) {
-      onSuccess?.call(_data!, _response!);
+      onSuccess?.call(data, response);
     } else if (error && (onError != null)) {
-      onError(_response!);
+      onError(response);
     } else if (hasException && (onException != null)) {
       onException(_exception);
     } else {
-      onFailure?.call(_response!, _exception);
+      onFailure?.call(response, _exception);
     }
   }
 
@@ -118,19 +118,19 @@ class HttpResult<T> {
     OnFailure? onFailure,
   }) {
     if (success) {
-      onSuccess?.call(_response!);
+      onSuccess?.call(response);
     } else if (error && (onError != null)) {
-      onError(_response!);
+      onError(response);
     } else if (hasException && (onException != null)) {
       onException(_exception);
     } else {
-      onFailure?.call(_response!, _exception);
+      onFailure?.call(response, _exception);
     }
   }
 
   HttpResult<T> onSuccess(OnSuccess<T> onSuccess) {
     if (success) {
-      onSuccess.call(_data!, _response!);
+      onSuccess.call(data, response);
     }
 
     return this;
@@ -138,7 +138,7 @@ class HttpResult<T> {
 
   HttpResult<T> onSuccessEmpty(OnSuccessEmpty onSuccess) {
     if (success) {
-      onSuccess.call(_response!);
+      onSuccess.call(response);
     }
 
     return this;
@@ -146,7 +146,7 @@ class HttpResult<T> {
 
   HttpResult<T> onError(OnError onError) {
     if (error) {
-      onError.call(_response!);
+      onError.call(response);
     }
 
     return this;
@@ -162,7 +162,7 @@ class HttpResult<T> {
 
   HttpResult<T> onFailure(OnFailure onFailure) {
     if (error || hasException) {
-      onFailure.call(_response!, _exception);
+      onFailure.call(response, _exception);
     }
 
     return this;

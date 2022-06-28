@@ -140,7 +140,7 @@ class WebPage {
 
   const WebPage(this.url);
 
-  static WebPage json(String json) {
+  factory WebPage.json(String json) {
     final dynamic data = jsonDecode(json);
 
     return WebPage(data['url']);

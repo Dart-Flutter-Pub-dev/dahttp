@@ -96,3 +96,7 @@
 ## [3.3.0] - 2021-03-07
 
 * Added support for null safety
+
+## [3.3.1] - 2022-06-28
+
+* Fixed lint errors

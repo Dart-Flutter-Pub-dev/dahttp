@@ -60,7 +60,7 @@ class DogCeo {
 
   const DogCeo(this.url);
 
-  static DogCeo fromJson(String json) {
+  factory DogCeo.fromJson(String json) {
     final dynamic data = jsonDecode(json);
 
     return DogCeo(data['message']);
